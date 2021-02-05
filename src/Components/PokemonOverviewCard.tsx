@@ -21,8 +21,8 @@ withStyles({
     background: "red"
   },
   media: {
-    height: "250px",
-    width: "100%",
+    // height: "300px",
+    // width: "100",
 
   },
 
@@ -44,12 +44,14 @@ export const PokemonOverviewCard: FunctionComponent<CardProps> = ({title, image,
   return (
     <Grid item key={index} xs={3}>
       <Card >
-        <CardActionArea className="cardAction">
+        <CardActionArea >
           
           <Typography variant="h4" color="textPrimary" component="h2" >
           <Box textAlign="center" m={1}>
-            {title.charAt(0).toUpperCase() +
-              title.slice(1)}
+              {title
+                .charAt(0).toUpperCase() +
+                title.slice(1)
+              }
           </Box>
           </Typography>
         
@@ -57,9 +59,13 @@ export const PokemonOverviewCard: FunctionComponent<CardProps> = ({title, image,
           
           <Box style={{backdropFilter: 'blur(5px) brightness(250%) '}} boxShadow={3}>
          
-         <Box >
+         <Box style={{height: 400}} display="flex" 
+       
+        alignItems="center"
+        justifyContent="center">
         <CardMedia
-          className='media'
+                  className='media'
+                  style={{width: 200}}
           image={image}
           title={title}
           component="img"
