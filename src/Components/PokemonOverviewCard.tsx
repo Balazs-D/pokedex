@@ -34,15 +34,16 @@ withStyles({
 interface CardProps {
   title: string,
   image: string,
-  index: number,
+ 
   background: string,
-  component: ReactNode
+  component: ReactNode,
+  id: number
   
 }
 
-export const PokemonOverviewCard: FunctionComponent<CardProps> = ({title, image, index, background}) => {
+export const PokemonOverviewCard: FunctionComponent<CardProps> = ({title, image, background, id}) => {
   return (
-    <Grid item key={index} xs={4}>
+    <Grid item xs={4} >
       <Card >
         <CardActionArea >
           
@@ -50,7 +51,7 @@ export const PokemonOverviewCard: FunctionComponent<CardProps> = ({title, image,
           <Box textAlign="center" m={1}>
               {title
                 .charAt(0).toUpperCase() +
-                title.slice(1)
+                title.slice(1) + id
               }
           </Box>
           </Typography>
@@ -59,13 +60,13 @@ export const PokemonOverviewCard: FunctionComponent<CardProps> = ({title, image,
           
           <Box style={{backdropFilter: 'blur(5px) brightness(250%) '}} boxShadow={3}>
          
-         <Box style={{height: 400}} display="flex" 
+         <Box style={{height: 220}} display="flex" 
        
         alignItems="center"
         justifyContent="center">
         <CardMedia
-                  className='media'
-                  style={{width: 200}}
+          className='media'
+          style={{width: 120}}
           image={image}
           title={title}
           component="img"
