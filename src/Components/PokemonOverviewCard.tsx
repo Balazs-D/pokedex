@@ -42,7 +42,7 @@ interface CardProps {
 
 export const PokemonOverviewCard: FunctionComponent<CardProps> = ({title, image, index, background}) => {
   return (
-    <Grid item key={index} xs={3}>
+    <Grid item key={index} xs={4}>
       <Card >
         <CardActionArea >
           
