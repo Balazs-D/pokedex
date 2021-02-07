@@ -1,5 +1,4 @@
 import React, { useEffect, useState, useContext, FunctionComponent, useCallback } from "react";
-import InfiniteScroll from 'react-infinite-scroller';
 import {
   Box,
   Grid,
@@ -7,26 +6,25 @@ import {
   Slider,
   Typography
 } from "@material-ui/core";
-import ArrowForwardIosRoundedIcon from '@material-ui/icons/ArrowForwardIosRounded';
-import ArrowBackIosRoundedIcon from '@material-ui/icons/ArrowBackIosRounded';
-
+import ExpandMoreTwoToneIcon from '@material-ui/icons/ExpandMoreTwoTone';
 import { PokemonOverviewCard } from "./PokemonOverviewCard";
+import {Loading} from "./Loading";
+
 import {Context} from '../Context/Context'
 const BG = require("../Graphics/Background/bg.jpg");
 
+
+
 export const Content: FunctionComponent = () => {
-  interface EventTarget {
-    value: number;
-}
-  const context = useContext(Context)
-  const [allPokemonDetails, setAllPokemonDetails] = useState([]);
-  const [url, setUrl] = useState(`https://pokeapi.co/api/v2/pokemon?limit=30&offset=0`);
-
-// ---------------------------- Pokemon Name + URl 
   
+  const context = useContext(Context)
+  const [allPokemonDetails, setAllPokemonDetails] = useState<any>([]);
+  const [url, setUrl] = useState<string>(`https://pokeapi.co/api/v2/pokemon?limit=21&offset=0`);
+  const [loadCounter, setLoadCounter] = useState<boolean>(true);
 
+  
   const loadAllPokeDetails = async () => {
-
+    setLoadCounter(true)
     let response = await fetch(url, {
       method: 'GET',
       headers: {
@@ -51,6 +49,8 @@ export const Content: FunctionComponent = () => {
         setAllPokemonDetails(prev => (prev.concat(dataIteration)))
         
       }
+
+      setLoadCounter(false)
     }
   };
 
@@ -61,12 +61,13 @@ export const Content: FunctionComponent = () => {
     fetchData();
   }, []);
 
+
   return (
-    <Box id='content' m={3} component='span' >
+    <Box id='content' m={3} component="span">
     
-      <Grid container spacing={10} max-width="xl" component="span" style={{minHeight: '100vh'}}>
+      <Grid container spacing={10} max-width="xl" component="span" >
           
-          {allPokemonDetails &&
+          {allPokemonDetails.length > 10 ?
             allPokemonDetails.map((item, i) => {
             
           return (
@@ -78,12 +79,26 @@ export const Content: FunctionComponent = () => {
               background={"../Graphics/Background/bg.jpg"}
               component={PokemonOverviewCard}
               id={item.id}
+              typeOne={item.types[0].type.name}
+              typeTwo={item.types.length >= 2 ? item.types[1].type.name : '' }
             />
         );
-        })}
+            }) : <Loading pokemonArray={ allPokemonDetails.length}/>}
       </Grid> 
       <Box display="flex" alignItems="center" justifyContent="center" mt={5}>   
-        <Button endIcon={<ArrowForwardIosRoundedIcon />} fullWidth={true} size="large" variant="contained" color="primary" onClick={() => { loadAllPokeDetails() }} disabled={allPokemonDetails.length < 21 }>Load More</Button> 
+        {allPokemonDetails &&
+          <Button
+            variant="outlined"
+            startIcon={<ExpandMoreTwoToneIcon />}
+            endIcon={<ExpandMoreTwoToneIcon />}
+            fullWidth={true}
+            size="large"
+            color="primary"
+            onClick={() => { loadAllPokeDetails() }} disabled={loadCounter}>
+          
+            Load More
+            
+            </Button>}
       </Box>
       
 

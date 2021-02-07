@@ -6,11 +6,11 @@ import {
   Card,
   CardMedia,
   CardActionArea,
-  CardHeader
+  Chip,
+  SvgIcon
 } from "@material-ui/core";
-
+import {pokemonStyleColor} from './HelperFunctions/StyleFunctions'
 import { withStyles } from "@material-ui/core/styles";
-const BG = require("../Graphics/Background/bg.jpg");
 
 withStyles({
  
@@ -20,62 +20,103 @@ withStyles({
     borderColor: "black",
     background: "red"
   },
-  media: {
-    // height: "300px",
-    // width: "100",
+  id: {
+    borderBottomLeftRadius: 16,
+    borderBottomRightRadius: 16
 
   },
 
   bg: {
-    opacity: 0.1
+    opacity: 0.05
   }
 });
 
 interface CardProps {
   title: string,
   image: string,
- 
+  typeOne: string, 
+  typeTwo: string,
   background: string,
   component: ReactNode,
   id: number
   
 }
 
-export const PokemonOverviewCard: FunctionComponent<CardProps> = ({title, image, background, id}) => {
+
+
+
+export const PokemonOverviewCard: FunctionComponent<CardProps> = ({ title, image, id, typeOne, typeTwo }) => {
   return (
     <Grid item xs={4} >
+      <Box border={1} borderRadius={5} borderColor="text.primary">
       <Card >
         <CardActionArea >
+          <Box style={{ height: 220 }}
+           
+            display="flex" 
+            alignItems="center"
+            justifyContent="center"
+            borderBottom={1}
+            bgcolor={pokemonStyleColor(typeOne)}
+            >
           
-          <Typography variant="h4" color="textPrimary" component="h2" >
-          <Box textAlign="center" m={1}>
-              {title
-                .charAt(0).toUpperCase() +
-                title.slice(1) + id
-              }
-          </Box>
-          </Typography>
-        
-        <CardMedia image={'https://pbs.twimg.com/media/DVMT-6OXcAE2rZY.jpg'} >
-          
-          <Box style={{backdropFilter: 'blur(5px) brightness(250%) '}} boxShadow={3}>
-         
-         <Box style={{height: 220}} display="flex" 
-       
-        alignItems="center"
-        justifyContent="center">
-        <CardMedia
-          className='media'
-          style={{width: 120}}
-          image={image}
-          title={title}
-          component="img"
-                />
+              <CardMedia
+                className='media'
+                style={{width: 120,}}
+                image={image}
+                title={title}
+                component="img"
+                
+            />
+  
+             {/* --------------- Pokemon Styles Stats  */}
+             <Typography variant="body1" >
+              <Box
+                display='flex'
+                flexDirection="column"
+                justifyContent='flex-start'
+                style={{ position: "absolute", top: 15, left: 15,  }} > 
+
+                    {[typeOne, typeTwo].map((item, i) => {
+                      if(item.length > 0){
+                        return (
+                        <Box mb={1} pl={1} pr={1} border={1} borderRadius={5}  bgcolor='#fff' >
+                        {item}
+                        </Box>)}
+                    })}
+           
+                </Box>
+            </Typography>
+            
+            {/* --------------- Pokemon ID  */}
+              <Typography variant="h5" color="textPrimary" component="h2" >
+              <Box
+                p={1}
+                border={1}
+                borderRadius={5}
+                style={{ position: "absolute", top: 15, right: 15 }}
+                bgcolor='#fff'
+              >
+                #{id}
               </Box>
-            </Box>
-      </CardMedia>
-    </CardActionArea>
-    </Card>
+              </Typography>
+          </Box>
+
+        </CardActionArea>
+        <Box  height={1}>
+            <Typography
+              variant="h5"
+              color="textPrimary"
+              component="h2" >
+              
+                <Box textAlign="center" m={2} display='block' >
+                {title.toUpperCase()}
+                </Box>
+              
+          </Typography>
+          </Box>
+      </Card>
+      </Box>
     </Grid>
   )
 }
