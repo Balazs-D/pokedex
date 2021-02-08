@@ -1,77 +1,56 @@
-import React, { useEffect, useState, useContext, FunctionComponent, useCallback } from "react";
+import React, { useEffect, useState, useContext, FunctionComponent } from "react";
 import {
   Box,
   Grid,
   Button,
-  Slider,
-  Typography
 } from "@material-ui/core";
 import ExpandMoreTwoToneIcon from '@material-ui/icons/ExpandMoreTwoTone';
 import { PokemonOverviewCard } from "./PokemonOverviewCard";
 import {Loading} from "./Loading";
-
 import {Context} from '../Context/Context'
-const BG = require("../Graphics/Background/bg.jpg");
-
-
 
 export const Content: FunctionComponent = () => {
-  
   const context = useContext(Context)
-  const [allPokemonDetails, setAllPokemonDetails] = useState<any>([]);
-  const [url, setUrl] = useState<string>(`https://pokeapi.co/api/v2/pokemon?limit=21&offset=0`);
-  const [loadCounter, setLoadCounter] = useState<boolean>(true);
 
-  
-  const loadAllPokeDetails = async () => {
-    setLoadCounter(true)
-    let response = await fetch(url, {
-      method: 'GET',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-    });
-    let data = await response.json();
-    setUrl(data.next)
-    if (data) {
+  const [loadCounter, setLoadCounter] = useState<boolean>(false);
 
-      // Loop through recent fetched data for details url
-      for (let i = 0; i < data.results.length; i++) {
-        let info = await fetch(data.results[i].url, {
-          method: 'GET',
-          headers: {
-            'Content-Type': 'application/json',
-          },
-        });
+  const loadMore = async () => {
+    await setLoadCounter(true);
+    await context.loadAllPokeDetails();
+    await setLoadCounter(false)
 
-        
-        let dataIteration = await info.json();
-        setAllPokemonDetails(prev => (prev.concat(dataIteration)))
-        
-      }
+  } 
 
-      setLoadCounter(false)
-    }
-  };
+  const [isMounted, setIsMounted] = useState(false);
 
   useEffect(() => {
     async function fetchData() {
-      await loadAllPokeDetails()
+      setIsMounted(true);
+      // setIsMounted(false);
+      setLoadCounter(true)
+      await context.loadAllPokeDetails();
+      setLoadCounter(false);
+      // setIsMounted(true)
+    };
+    fetchData()
+
+    return () => {
+      setIsMounted(false)
     }
-    fetchData();
   }, []);
 
+  
+console.log(context)
 
   return (
-    <Box id='content' m={3} component="span">
-    
+    <Box id='content' m={3} component="span" >
       <Grid container spacing={10} max-width="xl" component="span" >
-          
-          {allPokemonDetails.length > 10 ?
-            allPokemonDetails.map((item, i) => {
+      
+          {context.allPokemonDetails.length > 10 ?
+            context.allPokemonDetails.map((item, i) => {
             
           return (
-            
+           
             <PokemonOverviewCard 
               title={item.name}
               image={item.sprites.other.dream_world.front_default}
@@ -80,13 +59,16 @@ export const Content: FunctionComponent = () => {
               component={PokemonOverviewCard}
               id={item.id}
               typeOne={item.types[0].type.name}
-              typeTwo={item.types.length >= 2 ? item.types[1].type.name : '' }
+              typeTwo={item.types.length >= 2 ? item.types[1].type.name : ''}
+              
             />
         );
-            }) : <Loading pokemonArray={ allPokemonDetails.length}/>}
+            }) : <Loading pokemonArray={context.allPokemonDetails.length} />}
+         
       </Grid> 
       <Box display="flex" alignItems="center" justifyContent="center" mt={5}>   
-        {allPokemonDetails &&
+    
+        {context.allPokemonDetails &&
           <Button
             variant="outlined"
             startIcon={<ExpandMoreTwoToneIcon />}
@@ -94,14 +76,14 @@ export const Content: FunctionComponent = () => {
             fullWidth={true}
             size="large"
             color="primary"
-            onClick={() => { loadAllPokeDetails() }} disabled={loadCounter}>
+            onClick={() => { loadMore() }}
+            disabled={loadCounter}>
           
             Load More
             
             </Button>}
       </Box>
       
-
       </Box>
   );
 };

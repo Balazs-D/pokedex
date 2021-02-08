@@ -1,4 +1,5 @@
-import React, { FunctionComponent, ReactNode } from "react";
+import React, { FunctionComponent, ReactNode, useContext } from "react";
+import styled from 'styled-components';
 import {
   Box,
   Grid,
@@ -6,30 +7,11 @@ import {
   Card,
   CardMedia,
   CardActionArea,
-  Chip,
-  SvgIcon
 } from "@material-ui/core";
 import {pokemonStyleColor} from './HelperFunctions/StyleFunctions'
-import { withStyles } from "@material-ui/core/styles";
+import { useHistory } from "react-router-dom";
+import { Context } from '../Context/Context';
 
-withStyles({
- 
-  cardAction: {
-    borderRadius: 5,
-    border: 1,
-    borderColor: "black",
-    background: "red"
-  },
-  id: {
-    borderBottomLeftRadius: 16,
-    borderBottomRightRadius: 16
-
-  },
-
-  bg: {
-    opacity: 0.05
-  }
-});
 
 interface CardProps {
   title: string,
@@ -38,37 +20,50 @@ interface CardProps {
   typeTwo: string,
   background: string,
   component: ReactNode,
-  id: number
+  id: number,
   
-}
+};
+
+const BoxHover = styled(Box)`
+	box-shadow: 5px 5px 15px grey;
+	:hover {
+    box-shadow: 1px 1px 3px grey;
+	}
+`
 
 
 
+export const PokemonOverviewCard: FunctionComponent<CardProps> = ({ title, image, id, typeOne, typeTwo}) => {
+  const history = useHistory();
+  const context = useContext(Context)
 
-export const PokemonOverviewCard: FunctionComponent<CardProps> = ({ title, image, id, typeOne, typeTwo }) => {
+
+
   return (
+    
     <Grid item xs={4} >
-      <Box border={1} borderRadius={5} borderColor="text.primary">
-      <Card >
+      <BoxHover border={1} borderRadius={5} borderColor="text.primary" onClick={() => history.push(`/${id}`)}>
+        <Card onClick={() => {
+          context.loadSelectedPokemon(id); context.loadPokemonEvolution(id)
+        }}>
         <CardActionArea >
           <Box style={{ height: 220 }}
-           
             display="flex" 
             alignItems="center"
             justifyContent="center"
             borderBottom={1}
             bgcolor={pokemonStyleColor(typeOne)}
+              
             >
           
               <CardMedia
                 className='media'
-                style={{width: 120,}}
+                style={{width: 120}}
                 image={image}
                 title={title}
                 component="img"
                 
             />
-  
              {/* --------------- Pokemon Styles Stats  */}
              <Typography variant="body1" >
               <Box
@@ -80,7 +75,7 @@ export const PokemonOverviewCard: FunctionComponent<CardProps> = ({ title, image
                     {[typeOne, typeTwo].map((item, i) => {
                       if(item.length > 0){
                         return (
-                        <Box mb={1} pl={1} pr={1} border={1} borderRadius={5}  bgcolor='#fff' >
+                        <Box key={i} mb={1} pl={1} pr={1} border={1} borderRadius={5}  bgcolor='#fff' >
                         {item}
                         </Box>)}
                     })}
@@ -88,7 +83,8 @@ export const PokemonOverviewCard: FunctionComponent<CardProps> = ({ title, image
                 </Box>
             </Typography>
             
-            {/* --------------- Pokemon ID  */}
+              {/* --------------- Pokemon ID  */}
+            
               <Typography variant="h5" color="textPrimary" component="h2" >
               <Box
                 p={1}
@@ -99,7 +95,7 @@ export const PokemonOverviewCard: FunctionComponent<CardProps> = ({ title, image
               >
                 #{id}
               </Box>
-              </Typography>
+                </Typography>
           </Box>
 
         </CardActionArea>
@@ -116,8 +112,8 @@ export const PokemonOverviewCard: FunctionComponent<CardProps> = ({ title, image
           </Typography>
           </Box>
       </Card>
-      </Box>
-    </Grid>
+      </BoxHover>
+      </Grid>
   )
 }
  
