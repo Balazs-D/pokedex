@@ -1,11 +1,6 @@
 import React, { FunctionComponent, Fragment, useState } from "react";
 import { Context } from "./Context";
 
-// interface contextProps {
-//   url: string
-//   allPokemonDetails: any
-// }
-
 const Container: FunctionComponent = (props) =>  {
   const [url, setUrl] = useState<string>(
     "https://pokeapi.co/api/v2/pokemon?limit=21&offset=0"
@@ -39,75 +34,36 @@ const Container: FunctionComponent = (props) =>  {
             'Content-Type': 'application/json',
           },
         });
-
-        
         let dataIteration = await response.json();
-        setAllPokemonDetails(prev => (prev.concat(dataIteration)))
-        
+        setAllPokemonDetails(prev => (prev.concat(dataIteration))) 
       }
-
     }
 
-    let responseEvolution = await fetch(urlEvolution, {
-      method: 'GET',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-    });
-    let dataEvolution = await responseEvolution.json();
-    console.log(dataEvolution)
-    setAllEvolutions(prev => prev.concat(dataEvolution))
-    setUrlEvolution(dataEvolution.next)
   };
 
   const loadSelectedPokemon = async (id) => {
+    setSoloPokemon(allPokemonDetails.filter(item => item.id === id));
+ };
 
-    setSoloPokemon(allPokemonDetails.filter(item => item.order === id));
-   
-    //   let response = await fetch(`https://pokeapi.co/api/v2/pokemon/${id}`, {
-    //     method: 'GET',
-    //     headers: {
-    //       'Content-Type': 'application/json',
-    //     },
-    //   });
-    // let data = await response.json();
-    // setSoloPokemon(prev => (prev.concat(data)));
-    // return response.json()
-    
-    // let resEvolution = await fetch(`https://pokeapi.co/api/v2/evolution-chain/${id}`, {
-    //   method: 'GET',
-    //   headers: {
-    //     'Content-Type': 'application/json',
-    //   },
-    // });
-    // let dataEvolution = await resEvolution.json();
-    // setEvolution(dataEvolution);
-    // console.log(data)
-    
-     
-    
-  };
-
-  const loadPokemonEvolution = async (id, targetPokemon) => {
-  console.log(id, targetPokemon)
-    
-    for (let i = 0; i < allPokemonDetails.length; i++){
-       if (allPokemonDetails[i].name == targetPokemon) {
-         console.log(allPokemonDetails[i].id);
-        
-      }
-    }
-
-    // for (let i = 1; i <= allPokemon; i++) {
-      let response = await fetch(`https://pokeapi.co/api/v2/evolution-chain/${id}`, {
+  const loadPokemonEvolution = async (name) => {
+    let response = await fetch(`https://pokeapi.co/api/v2/pokemon-species/${name}`, {
         method: 'GET',
         headers: {
           'Content-Type': 'application/json',
         },
       });
-      let data = await response.json();
-      setEvolution([data]);
-      console.log(data)
+    
+    
+    let data = await response.json();
+    let res = await fetch(data.evolution_chain.url, {
+      method: 'GET',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+    });
+    let evoData = await res.json()
+      setEvolution([evoData]);
+      console.log(evoData)
 
     // }
   };

@@ -82,7 +82,7 @@ export const PokemonDetails: FunctionComponent = () => {
     setMounted(false);
     if (context.soloPokemon[0]) {
         async function fetchEvolution() {
-        await context.loadPokemonEvolution(context.soloPokemon[0].order, context.soloPokemon[0].name );
+        await context.loadPokemonEvolution(context.soloPokemon[0].name );
         await setMounted(true);
       }
       fetchEvolution();
@@ -109,7 +109,9 @@ export const PokemonDetails: FunctionComponent = () => {
     });
   
     return arr
-  }
+  };
+
+  console.log(context.evolution)
 
   return (
     <DetailsCont>

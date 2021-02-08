@@ -11,7 +11,7 @@ import {Context} from '../Context/Context'
 
 export const Content: FunctionComponent = () => {
   const context = useContext(Context)
-
+  const [isMounted, setIsMounted] = useState(false);
   const [loadCounter, setLoadCounter] = useState<boolean>(false);
 
   const loadMore = async () => {
@@ -19,28 +19,26 @@ export const Content: FunctionComponent = () => {
     await context.loadAllPokeDetails();
     await setLoadCounter(false)
 
-  } 
-
-  const [isMounted, setIsMounted] = useState(false);
+  };
 
   useEffect(() => {
     async function fetchData() {
       setIsMounted(true);
-      // setIsMounted(false);
       setLoadCounter(true)
       await context.loadAllPokeDetails();
       setLoadCounter(false);
-      // setIsMounted(true)
     };
-    fetchData()
+
+    if (context.loadAllPokeDetails.length == 0) {
+      console.log(context.allPokemonDetails.length)
+      fetchData();
+    }
 
     return () => {
       setIsMounted(false)
     }
   }, []);
 
-  
-console.log(context)
 
   return (
     <Box id='content' m={3} component="span" >
