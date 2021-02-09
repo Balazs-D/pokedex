@@ -1,6 +1,7 @@
 import React, { FunctionComponent, Fragment, useState } from "react";
 import { Context } from "./Context";
 
+
 const Container: FunctionComponent = (props) =>  {
   const [url, setUrl] = useState<string>(
     "https://pokeapi.co/api/v2/pokemon?limit=21&offset=0"
@@ -9,9 +10,9 @@ const Container: FunctionComponent = (props) =>  {
     "https://pokeapi.co/api/v2/evolution-chain?offset=0&limit=21",
   );
   const [allPokemonDetails, setAllPokemonDetails] = useState<any>([]);
-  const [soloPokemon, setSoloPokemon] = useState<any>();
-  const [evolution, setEvolution] = useState<any>([]);
-  const [allEvolutions, setAllEvolutions] = useState<any>([]);
+  const [soloPokemon, setSoloPokemon] = useState<React.ReactNode>();
+  const [evolution, setEvolution] = useState<React.ReactNode>([]);
+  const [allEvolutions, setAllEvolutions] = useState<React.ReactNode>([]);
 
   
 

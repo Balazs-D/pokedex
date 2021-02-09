@@ -28,9 +28,8 @@ export const Content: FunctionComponent = () => {
       await context.loadAllPokeDetails();
       setLoadCounter(false);
     };
-
-    if (context.loadAllPokeDetails.length == 0) {
-      console.log(context.allPokemonDetails.length)
+   
+    if (context.allPokemonDetails.length === 0) {
       fetchData();
     }
 

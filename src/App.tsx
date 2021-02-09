@@ -33,16 +33,15 @@ const App = () => {
 
       <Navbar />
       
-            <Container maxWidth="lg">
+            <Container
+              maxWidth="lg"
+              // max-width='false'
+            >
               
         <Switch>
             <Route exact path="/" component={Content} />
-            {/* {/* <Route exact path="/foo" component={Foo} /> */}
             <Route exact path="/:id" component={()=> <PokemonDetails />} /> 
           </Switch> 
-          {/* <Content /> */}
-          {/* <TEST /> */}
-      
             </Container>
             </ThemeProvider>
         </Router>
