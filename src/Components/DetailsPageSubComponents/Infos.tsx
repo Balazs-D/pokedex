@@ -7,13 +7,16 @@ import {
 import { makeStyles } from '@material-ui/core/styles';
 
 
-const useStyles = makeStyles({
+const useStyles = makeStyles(theme => ({
   InfoBox: {
     width: "100%",
     display: "flex",
     flexDirection: "row",
     justifyContent: "space-between",
-    padding: "5vw 0 1vw 0"
+    padding: "5vw 2vw 1vw 2vw",
+    [theme.breakpoints.down('xs')]: {
+      flexDirection: "column",
+    }
   },
   LeftPanelBox: {
     display: "flex",
@@ -26,7 +29,7 @@ const useStyles = makeStyles({
     padding: "0 4vw",
     margin: "0 2vw"
   }
-});
+}));
 
 
 interface InfoProps {
@@ -58,7 +61,7 @@ export const Infos: FunctionComponent<InfoProps> =  (props: InfoProps) => {
           
           
           <div className={classes.BoxSpan}>
-            <Box mb={3}>
+            <Box mb={3} >
                 <Typography variant='h5'>Types</Typography>
                 {types.map((item, i) => {
                   return <Typography key={i} variant='body1'>{item.type.name}</Typography>
@@ -70,8 +73,8 @@ export const Infos: FunctionComponent<InfoProps> =  (props: InfoProps) => {
               <Typography variant='h5'>Stats</Typography>
                 {stats.map((item, i) => {
                   return (
-                    <Box mb={1}>
-                      <Typography key={i} variant='body1'>{item.stat.name}: {item.base_stat}</Typography>
+                    <Box mb={1} key={i}>
+                      <Typography  variant='body1'>{item.stat.name}: {item.base_stat}</Typography>
                       <LinearProgress variant="determinate" value={normalize(item.base_stat)} />
                     </Box>)
                 })}

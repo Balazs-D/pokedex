@@ -6,7 +6,7 @@ import {
 } from "@material-ui/core";
 import { makeStyles } from '@material-ui/core/styles';
 import { useHistory } from "react-router-dom";
-import {getEvolutionImgs, getEvolutionNames } from '../HelperFunctions/EvolutionDetails'
+import {getEvolutionImgs } from '../HelperFunctions/EvolutionDetails'
 import { ImageKeeper } from './DetailsPageSubComponents/ImageKeeper';
 import {Loading} from "./Loading";
 import {DetailsTabs} from './DetailsPageSubComponents/DetailsTabs'
@@ -21,6 +21,7 @@ const useStyles = makeStyles(theme => ({
     justifyContent: "center",
     [theme.breakpoints.down('xs')]: {
       height: "auto",
+      marginBottom: "2vh"
     }
   },
   content: {
@@ -30,24 +31,14 @@ const useStyles = makeStyles(theme => ({
     height: "100%",
     display: "flex",
     flexDirection: "row",
+    overflow: 'hidden',
+
     [theme.breakpoints.down('xs')]: {
       flexDirection: "column",
     }
   }
  
 }));
-
-
-// interface PokemonDetails {
-//   images: any[],
-//   names: any[],
-//   abilities: string[],
-//   moves: string[],
-//   stats: string[],
-//   types: string[]
- 
-// };
-
 
   
 export const PokemonDetails = () => {
@@ -77,6 +68,8 @@ export const PokemonDetails = () => {
       setMounted(false);
     }
   }, []);
+
+  console.log(context.evolution[0])
   
   return (
     <div className={classes.root}>
@@ -91,7 +84,6 @@ export const PokemonDetails = () => {
           <ImageKeeper pokemon={currentPokemon[0]} sprite={currentPokemon[0].sprites.other.dream_world.front_default} />
           {context.evolution.length > 0 ?
             <DetailsTabs
-              names={getEvolutionNames(context.evolution[0])}
               images={getEvolutionImgs(context.allPokemonDetails,context.evolution[0] )}
               abilities={currentPokemon[0].abilities}
               moves={currentPokemon[0].moves}

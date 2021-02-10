@@ -92,7 +92,6 @@ function TabPanel(props: TabPanelProps) {
 
 interface EvolvesToProps {
   images: any[],
-  names: any[],
   abilities: string[],
   moves: string[],
   stats: string[],
@@ -107,14 +106,13 @@ export const DetailsTabs: FunctionComponent<EvolvesToProps> = (props: EvolvesToP
   const theme = useTheme();
   const [value, setValue] = useState(0);
 
-  const { names,images,abilities,moves,stats,types} = props;
+  const { images,abilities,moves,stats,types} = props;
 
   const handleChange = (event: React.ChangeEvent<{}>, newValue: number) => {
     setValue(newValue);
   };
 
-  console.log(props)
-
+console.log(images)
   return (
     <div className={classes.root}>
       <div className={classes.root}>
@@ -136,7 +134,7 @@ export const DetailsTabs: FunctionComponent<EvolvesToProps> = (props: EvolvesToP
       </TabPanel>
       <TabPanel value={value} index={2} dir={theme.direction}>
         <Evolution
-          names={names}
+         
           images={images}
           
         /> 

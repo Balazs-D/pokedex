@@ -2,8 +2,10 @@ import React, { FunctionComponent } from "react";
 import {
   Typography,
 } from "@material-ui/core";
-import { makeStyles  } from '@material-ui/core/styles';
-import {pokemonStyleColor} from '../../HelperFunctions/StyleFunctions'
+import { makeStyles } from '@material-ui/core/styles';
+import { pokemonStyleColor } from '../../HelperFunctions/StyleFunctions'
+
+
 
 const useStyles = makeStyles(theme => ({
   root: {
@@ -12,7 +14,6 @@ const useStyles = makeStyles(theme => ({
     display: 'flex',
     justifyContent: 'space-between',
     flexWrap: 'wrap',
-    
     '& > *': {
       margin: theme.spacing(0.5),
     },
@@ -29,15 +30,29 @@ const useStyles = makeStyles(theme => ({
       borderRight: "0px solid black",
       borderBottom: "1px solid black",
     }
-
   },
+    Title: {
+      [theme.breakpoints.down('xs')]: {
+        fontSize: 45
+      }
+    }
+
+  ,
   TitleBox: {
     margin: '.5vw'
   },
   Image: {
     width:"15vw",
     maxHeight: "18vw",
-    margin: "1vw"
+    margin: "1vw",
+    [theme.breakpoints.down('xs')]: {
+      width: "45vh",
+      height: '40vh',
+      maxHeight: "50vw",
+      margin: "4vw",
+
+
+    }
   }
 }));
 
@@ -70,7 +85,7 @@ export const ImageKeeper: FunctionComponent<PokemonProps> = (props: PokemonProps
       <div className={classes.ImgBox} style={{ background: bg }}>
            
       <div className={classes.TitleBox}>
-        <Typography variant='h2'>
+        <Typography className={classes.Title} variant='h2' >
                 {name.toUpperCase()}
               </Typography>
                 <Typography align='right' variant='h5'>#{order}</Typography>

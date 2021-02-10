@@ -66,7 +66,6 @@ export const PokemonOverviewCard: FunctionComponent<CardProps> = (CardProps) => 
     typeOne,
     typeTwo,
     id } = CardProps;
-  console.log(typeOne)
   const history = useHistory();
   const context = useContext(Context)
   const classes = useStyles();
@@ -93,18 +92,17 @@ export const PokemonOverviewCard: FunctionComponent<CardProps> = (CardProps) => 
                 
             />
              {/* --------------- Pokemon Styles Stats  */}
-             <Typography variant="body1" >
               <div className={classes.TitleCont}
                 > 
                     {[typeOne, typeTwo].map((item, i) => { if(item.length > 0){
                         return (
-                        <Box key={i} mb={1} pl={1} pr={1} border={1} borderRadius={5} bgcolor='#fff' >
-                        {item}
+                          <Box key={i} mb={1} pl={1} pr={1} border={1} borderRadius={5} bgcolor='#fff' >
+                              <Typography variant="body2" >{item}</Typography>
+                       
                         </Box>)}
                     })}
            
                 </div>
-            </Typography>
             
               {/* // --------------- Pokemon ID // */}
             
@@ -122,7 +120,7 @@ export const PokemonOverviewCard: FunctionComponent<CardProps> = (CardProps) => 
             <Typography
               variant="h5"
               color="textPrimary"
-              component="h2" >
+              >
               
                 <Box textAlign="center" m={2} display='block' >
                 {title.toUpperCase()}

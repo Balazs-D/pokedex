@@ -2,12 +2,12 @@ import React, { FunctionComponent, Fragment, useState } from "react";
 import { Context } from "./Context";
 
 interface ContextInterface {
-  url: string;
-  urlEvolution: string;
-  allPokemonDetails: any[];
-  soloPokemon: any[] ;
-  evolution: any[];
-  allEvolutions: any[];
+  url?: string;
+  urlEvolution?: string;
+  allPokemonDetails?: any[];
+  soloPokemon?: any[];
+  evolution?: any[];
+  allEvolutions?: any[];
 };
 
 const Container: FunctionComponent<ContextInterface> = (ContextInterface) =>  {
