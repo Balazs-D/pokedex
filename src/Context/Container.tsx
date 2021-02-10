@@ -1,18 +1,26 @@
 import React, { FunctionComponent, Fragment, useState } from "react";
 import { Context } from "./Context";
 
+interface ContextInterface {
+  url: string;
+  urlEvolution: string;
+  allPokemonDetails: any[];
+  soloPokemon: any[] ;
+  evolution: any[];
+  allEvolutions: any[];
+};
 
-const Container: FunctionComponent = (props) =>  {
-  const [url, setUrl] = useState<string>(
+const Container: FunctionComponent<ContextInterface> = (ContextInterface) =>  {
+  const [url, setUrl] = useState(
     "https://pokeapi.co/api/v2/pokemon?limit=21&offset=0"
   );
-  const [urlEvolution, setUrlEvolution] = useState<string>(
+  const [urlEvolution, setUrlEvolution] = useState(
     "https://pokeapi.co/api/v2/evolution-chain?offset=0&limit=21",
   );
   const [allPokemonDetails, setAllPokemonDetails] = useState<any>([]);
-  const [soloPokemon, setSoloPokemon] = useState<React.ReactNode>();
-  const [evolution, setEvolution] = useState<React.ReactNode>([]);
-  const [allEvolutions, setAllEvolutions] = useState<React.ReactNode>([]);
+  const [soloPokemon, setSoloPokemon] = useState();
+  const [evolution, setEvolution] = useState([]);
+  const [allEvolutions, setAllEvolutions] = useState([]);
 
   
 
@@ -64,7 +72,6 @@ const Container: FunctionComponent = (props) =>  {
     });
     let evoData = await res.json()
       setEvolution([evoData]);
-      console.log(evoData)
 
     // }
   };
@@ -84,8 +91,10 @@ const Container: FunctionComponent = (props) =>  {
         allEvolutions, setAllEvolutions,
         urlEvolution, setUrlEvolution
       }}
+
+      {...ContextInterface}
     >
-      <Fragment>{props.children}</Fragment>
+      <Fragment>{ContextInterface.children}</Fragment>
     </Context.Provider>
   );
 };

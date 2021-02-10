@@ -1,18 +1,26 @@
-import React, { useEffect, useState, useContext, FunctionComponent } from "react";
+import React, { useEffect, useState, useContext, FunctionComponent  } from "react";
 import {
   Box,
   Grid,
   Button,
+  useMediaQuery
 } from "@material-ui/core";
+import { useTheme } from '@material-ui/core/styles';
+
 import ExpandMoreTwoToneIcon from '@material-ui/icons/ExpandMoreTwoTone';
 import { PokemonOverviewCard } from "./PokemonOverviewCard";
 import {Loading} from "./Loading";
-import {Context} from '../Context/Context'
+import { Context } from '../Context/Context'
+
+
 
 export const Content: FunctionComponent = () => {
   const context = useContext(Context)
-  const [isMounted, setIsMounted] = useState(false);
+  const [isMounted, setIsMounted] = useState<boolean>(false);
   const [loadCounter, setLoadCounter] = useState<boolean>(false);
+
+  const theme = useTheme();
+  const isSmall = useMediaQuery(theme.breakpoints.down('sm'));
 
   const loadMore = async () => {
     await setLoadCounter(true);
@@ -40,20 +48,18 @@ export const Content: FunctionComponent = () => {
 
 
   return (
-    <Box id='content' m={3} component="span" >
-      <Grid container spacing={10} max-width="xl" component="span" >
+    <Box id='content' m={3} component="span" width='100%'>
+      <Grid container direction="row" spacing={isSmall ? 2 : 10} max-width="xl" component="span" >
       
           {context.allPokemonDetails.length > 10 ?
             context.allPokemonDetails.map((item, i) => {
             
           return (
            
-            <PokemonOverviewCard 
+            <PokemonOverviewCard
               title={item.name}
               image={item.sprites.other.dream_world.front_default}
               key={i}
-              background={"../Graphics/Background/bg.jpg"}
-              component={PokemonOverviewCard}
               id={item.id}
               typeOne={item.types[0].type.name}
               typeTwo={item.types.length >= 2 ? item.types[1].type.name : ''}

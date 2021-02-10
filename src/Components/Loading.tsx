@@ -8,7 +8,7 @@ import {
 
 
 interface LoadingProps {
-  pokemonArray: number
+  pokemonArray?: number
 }
 
 export const Loading: FunctionComponent<LoadingProps> = ({pokemonArray}) => {
@@ -22,7 +22,7 @@ export const Loading: FunctionComponent<LoadingProps> = ({pokemonArray}) => {
       display="inline-flex"
       alignItems="center"
       height="100vh"
-    ><CircularProgress  value={pokemonArray * 100} />
+    ><CircularProgress value={pokemonArray * 100} />
        <Box
         top={2}
         left={0}

@@ -7,7 +7,7 @@ import Container from "@material-ui/core/Container";
 import Navbar from "./Components/Navbar";
 import Content from "./Components/PokemonList";
 import ContextContainer from './Context/Container'
-import {PokemonDetails} from './PokemonDetails';
+import {PokemonDetails} from './Components/PokemonDetails';
 import { Context } from "./Context/Context";
 
 const theme = createMuiTheme({
@@ -35,7 +35,7 @@ const App = () => {
       
             <Container
               maxWidth="lg"
-              // max-width='false'
+              max-width='false'
             >
               
         <Switch>

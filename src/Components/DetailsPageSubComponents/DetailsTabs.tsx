@@ -1,15 +1,12 @@
-import React, {useContext, useState} from 'react';
+import React, {FunctionComponent, useState} from 'react';
 import { makeStyles, withStyles, Theme, createStyles, useTheme } from '@material-ui/core/styles';
-import {Context} from '../../Context/Context';
-import AppBar from '@material-ui/core/AppBar';
 import Tabs from '@material-ui/core/Tabs';
 import Tab from '@material-ui/core/Tab';
 import Typography from '@material-ui/core/Typography';
 import Box from '@material-ui/core/Box';
-import {pokemonStyleColor} from '../../Components/HelperFunctions/StyleFunctions'
-
 import { Moves } from './Moves';
 import { Infos } from './Infos';
+import { Evolution } from './Evolution';
 
 interface StyledTabsProps {
   value: number;
@@ -43,11 +40,6 @@ const StyledTab = withStyles((theme: Theme) =>
       fontWeight: theme.typography.fontWeightRegular,
       fontSize: theme.typography.pxToRem(15),
       marginRight: theme.spacing(1),
-      // backgroundColor: "transparent",
-      rootTab: {
-      flexGrow: 1,
-      
-  },
       flexGrow: 1,
       '&:focus': {
         opacity: 1,
@@ -56,22 +48,17 @@ const StyledTab = withStyles((theme: Theme) =>
   }),
 )((props: StyledTabProps) => <Tab disableRipple {...props} />);
 
-const useStyles = makeStyles((theme: Theme) => ({
+const useStyles = makeStyles({
   root: {
     flexGrow: 1,
     width: '100%'
-  },
-  padding: {
-    // padding: theme.spacing(3),
   },
   demo2: {
     display: "flex",
     width: '100%',
     justifyContent: 'center'
-  },
-}));
-
-// ----------------
+  }
+});
 
 interface TabPanelProps {
   children?: React.ReactNode;
@@ -79,8 +66,6 @@ interface TabPanelProps {
   index: any;
   value: any;
 }
-
-
 
 function TabPanel(props: TabPanelProps) {
   const { children, value, index, ...other } = props;
@@ -92,10 +77,10 @@ function TabPanel(props: TabPanelProps) {
       id={`full-width-tabpanel-${index}`}
       aria-labelledby={`full-width-tab-${index}`}
       {...other}
-      style={{display: 'flex', justifyContent: 'space-around', width: '100%'}}
+      style={{display: 'flex', justifyContent: 'space-around' }}
     >
       {value === index && (
-        <Box p={3}>
+        <Box p={3} style={{overflow: 'hidden', position: 'relative', width: '100%'}} >
           <Typography>{children}</Typography>
         </Box>
       )}
@@ -103,27 +88,32 @@ function TabPanel(props: TabPanelProps) {
   );
 }
 
-function a11yProps(index: any) {
-  return {
-    id: `full-width-tab-${index}`,
-    'aria-controls': `full-width-tabpanel-${index}`,
-  };
-}
 
 
+interface EvolvesToProps {
+  images: any[],
+  names: any[],
+  abilities: string[],
+  moves: string[],
+  stats: string[],
+  types: string[]
+ 
+};
 
-export default function NavTabs(props) {
+
+// export const DetailsTabs = ( props )=>{
+export const DetailsTabs: FunctionComponent<EvolvesToProps> = (props: EvolvesToProps) => {
   const classes = useStyles();
   const theme = useTheme();
   const [value, setValue] = useState(0);
-  const context = useContext(Context)
+
+  const { names,images,abilities,moves,stats,types} = props;
+
   const handleChange = (event: React.ChangeEvent<{}>, newValue: number) => {
     setValue(newValue);
   };
 
-  const handleChangeIndex = (index: number) => {
-    setValue(index);
-  };
+  console.log(props)
 
   return (
     <div className={classes.root}>
@@ -131,19 +121,25 @@ export default function NavTabs(props) {
       <div className={classes.demo2}>
         <StyledTabs value={value} onChange={handleChange} >
           <StyledTab label="Details" />
-          <StyledTab label="Moves" />
+            <StyledTab label="Moves" />
+            <StyledTab label="Evolution" />
         </StyledTabs>
-        <Typography className={classes.padding} />
+      
       </div>
     </div>
       
-     
       <TabPanel value={value} index={0} dir={theme.direction}>
-        <Infos evolutionImages={props.evolutionImages} evolution={props.evolution} selectedPokemon={context.soloPokemon[0]}/>
-
+        <Infos  abilities={abilities} types={types} stats={stats}/>
         </TabPanel>
         <TabPanel value={value} index={1} dir={theme.direction}>
-        <Moves items={context.soloPokemon[0]}/>
+        <Moves items={moves}/>
+      </TabPanel>
+      <TabPanel value={value} index={2} dir={theme.direction}>
+        <Evolution
+          names={names}
+          images={images}
+          
+        /> 
         </TabPanel>
        
      

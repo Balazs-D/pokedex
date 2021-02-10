@@ -7,6 +7,9 @@
       "dom.iterable",
       "esnext"
     ],
+    "typeRoots": [
+      "custom_typings"
+    ],
     "noImplicitAny": true,
     "noImplicitThis": true,
     "strictNullChecks": true,
