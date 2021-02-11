@@ -12,7 +12,7 @@ import { PokemonOverviewCard } from "./PokemonOverviewCard";
 import {Loading} from "./Loading";
 import { Context } from '../Context/Context'
 
-export const Content: FunctionComponent = () => {
+export const Content = () => {
   const context = useContext(Context)
   const [isMounted, setIsMounted] = useState<boolean>(false);
   const [loadCounter, setLoadCounter] = useState<boolean>(false);
@@ -47,7 +47,7 @@ export const Content: FunctionComponent = () => {
 
   return (
     <Box id='content' m={3} component="span" width='100%'>
-      <Grid container direction="row" spacing={isSmall ? 2 : 10} max-width="xl" component="span" >
+      <Grid id='listGrid' container direction="row" spacing={isSmall ? 2 : 10} max-width="xl" component="span" >
       
           {context.allPokemonDetails.length > 10 ?
             context.allPokemonDetails.map((item, i) => {
