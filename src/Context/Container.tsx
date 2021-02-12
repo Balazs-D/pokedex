@@ -1,7 +1,10 @@
 import React, { FunctionComponent, Fragment, useState } from "react";
-import { Context } from "./Context";
+import  { Context } from "./Context";
 
-interface ContextInterface {
+
+
+
+export interface ContextInterface {
   url?: string;
   urlEvolution?: string;
   allPokemonDetails?: any[];
@@ -17,36 +20,46 @@ const Container: FunctionComponent<ContextInterface> = (ContextInterface) =>  {
   const [urlEvolution, setUrlEvolution] = useState(
     "https://pokeapi.co/api/v2/evolution-chain?offset=0&limit=21",
   );
-  const [allPokemonDetails, setAllPokemonDetails] = useState<any>([]);
+   const [allPokemonDetails, setAllPokemonDetails] = useState<any>([]);
   const [soloPokemon, setSoloPokemon] = useState();
   const [evolution, setEvolution] = useState([]);
   const [allEvolutions, setAllEvolutions] = useState([]);
 
   
 
-  const loadAllPokeDetails = async () => {
-    let response = await fetch(url, {
-      method: 'GET',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-    });
-    let data = await response.json();
-    setUrl(data.next)
-    if (data) {
-
-      // Loop through recent fetched data for details url
-      for (let i = 0; i < data.results.length; i++) {
-        let response = await fetch(data.results[i].url, {
-          method: 'GET',
-          headers: {
-            'Content-Type': 'application/json',
-          },
-        });
-        let dataIteration = await response.json();
-        setAllPokemonDetails(prev => (prev.concat(dataIteration))) 
+   const loadAllPokeDetails = async () => {
+    try {
+      let response = await fetch(url, {
+        method: 'GET',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+      });
+      let data = await response.json();
+      setUrl(data.next)
+      if (data) {
+  
+        try {
+           // Loop through recent fetched data for details url
+          for (let i = 0; i < data.results.length; i++) {
+          let response = await fetch(data.results[i].url, {
+            method: 'GET',
+            headers: {
+              'Content-Type': 'application/json',
+            },
+          });
+          let dataIteration = await response.json();
+          setAllPokemonDetails(prev => (prev.concat(dataIteration))) 
+        } 
+        } catch (error) {
+          console.log(error)
+        }
       }
+    } catch (error) {
+      console.log(error)
+
     }
+   
 
   };
 
@@ -75,6 +88,8 @@ const Container: FunctionComponent<ContextInterface> = (ContextInterface) =>  {
 
     // }
   };
+
+  
 
   return (
     <Context.Provider

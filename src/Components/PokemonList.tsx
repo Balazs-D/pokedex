@@ -12,7 +12,7 @@ import { PokemonOverviewCard } from "./PokemonOverviewCard";
 import {Loading} from "./Loading";
 import { Context } from '../Context/Context'
 
-export const Content = () => {
+export const Content: FunctionComponent = () => {
   const context = useContext(Context)
   const [isMounted, setIsMounted] = useState<boolean>(false);
   const [loadCounter, setLoadCounter] = useState<boolean>(false);

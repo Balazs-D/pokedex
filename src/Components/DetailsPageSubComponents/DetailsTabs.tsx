@@ -100,7 +100,6 @@ interface EvolvesToProps {
 };
 
 
-// export const DetailsTabs = ( props )=>{
 export const DetailsTabs: FunctionComponent<EvolvesToProps> = (props: EvolvesToProps) => {
   const classes = useStyles();
   const theme = useTheme();

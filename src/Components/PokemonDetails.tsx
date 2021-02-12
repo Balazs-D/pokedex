@@ -69,7 +69,6 @@ export const PokemonDetails = () => {
     }
   }, []);
 
-  console.log(context.evolution[0])
   
   return (
     <div className={classes.root}>

@@ -1,19 +1,14 @@
-import React, { FunctionComponent, useState } from "react";
+import React, { FunctionComponent } from "react";
 import {
   Box,
   CircularProgress,
   Typography
 } from "@material-ui/core";
-
-
-
 interface LoadingProps {
   pokemonArray?: number
 }
 
 export const Loading: FunctionComponent<LoadingProps> = ({pokemonArray}) => {
-  
-
   
   return (
     <Box
