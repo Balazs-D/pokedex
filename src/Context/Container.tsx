@@ -4,7 +4,7 @@ import  { Context } from "./Context";
 
 
 
-export interface ContextInterface {
+interface ContextInterface {
   url?: string;
   urlEvolution?: string;
   allPokemonDetails?: any[];
