@@ -1,6 +1,6 @@
-import React, { useContext,createContext, FunctionComponent, ReactNode } from 'react';
+import React, { useContext, createContext, FunctionComponent, ReactNode } from 'react';
 import { Context } from '../Context/Context';
-import  Container from '../Context/Container';
+import Container from '../Context/Container';
 import PokemonList from '../Components/PokemonList'
 import { render, fireEvent, waitFor } from '@testing-library/react';
 import { act, renderHook } from '@testing-library/react-hooks'
@@ -9,50 +9,45 @@ import { act, renderHook } from '@testing-library/react-hooks'
 // Test if getting and updating context data is working
 
 
-    // note: ------------------- Hard coded context configuration
+// note: ------------------- Hard coded context configuration
 const defaultConfig = {
   baseurl: 'https://localhost:1948',
   env: 'dev',
 };
 
+// const ConfigurationContext = createContext(defaultConfig);
+// note: -------------------- Connection to context is not working
+const ConfigurationContext = createContext(Container);
+
 const useTestUrl = () => {
-  const { baseurl } = useContext(ConfigurationContext);
+  const { url } = useContext(ConfigurationContext);
   return `${baseurl}/result.pdf`;
 };
 
-const ConfigurationContext = createContext(defaultConfig);
-    // note: -------------------- Connection to context is not working
-
-// const ConfigurationContext = createContext(Container);
-// const useTestUrl = () => {
-//   const { baseurl } = useContext(Container);
-//   return `${baseurl}/result.pdf`;
-// };
-
 describe('useTestURL (context)', () => {
   const makeWrapper = (value: any): FunctionComponent => ({ children }: { children?: ReactNode }) => (
-      <ConfigurationContext.Provider value={value}>
-          {children}
-      </ConfigurationContext.Provider>
+    <ConfigurationContext.Provider value={value}>
+      {children}
+    </ConfigurationContext.Provider>
   );
 
   it('should use context provided config', () => {
-      const { result } = renderHook(
-          () => useTestUrl(),
-          {
-              wrapper: makeWrapper({ baseurl: '{baseurl}', env: '{env}' }),
-          },
-      );
+    const { result } = renderHook(
+      () => useTestUrl(),
+      {
+        wrapper: makeWrapper({ baseurl: '{baseurl}', env: '{env}' }),
+      },
+    );
 
-      expect(result.current).toBe('{baseurl}/result.pdf');
+    expect(result.current).toBe('{baseurl}/result.pdf');
   });
 
   it('should use default config', () => {
-      const { result } = renderHook(
-          () => useTestUrl(),
-      );
+    const { result } = renderHook(
+      () => useTestUrl(),
+    );
 
-      expect(result.current).toBe('https://localhost:1948/result.pdf');
+    expect(result.current).toBe('https://localhost:1948/result.pdf');
   });
 });
 
@@ -69,7 +64,7 @@ describe('fetches-all-pokemon-details-on-render-through-context', () => {
         </Context.Provider>
       )
     });
-  
+
     await waitFor(() => {
       expect(loadAllPokeDetails).toHaveBeenCalledTimes(1)
     })
@@ -84,7 +79,7 @@ describe('fetch-next-pokemon-group-on-click', () => {
   it('context update', async () => {
     const TestComponent = () => {
       const { loadAllPokeDetails, allPokemonDetails, url } = useContext(Context);
-      
+
       return <>
         <div data-testid='value'>{allPokemonDetails.length}</div>
         <div data-testid='url'>{url}</div>
@@ -103,8 +98,8 @@ describe('fetch-next-pokemon-group-on-click', () => {
         <TestComponent />
       </Context.Provider>
     );
-    
-      
+
+
     expect(wrapper.getByTestId('value').textContent).toBe('0');
     expect(wrapper.getByTestId('url').textContent).toBe('https://pokeapi.co/api/v2/evolution-chain?offset=0&limit=21');
     fireEvent.click(wrapper.getByText('Fetch'));
@@ -113,7 +108,7 @@ describe('fetch-next-pokemon-group-on-click', () => {
 })
 
 
-    
-   
+
+
 
 
