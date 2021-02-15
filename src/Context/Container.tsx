@@ -3,9 +3,6 @@ import { Context } from "./Context";
 
 
 
-
-
-
 const Container: FunctionComponent = (ContextInterface) => {
   const [url, setUrl] = useState(
     "https://pokeapi.co/api/v2/pokemon?limit=21&offset=0"

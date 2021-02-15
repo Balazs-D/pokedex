@@ -1,15 +1,15 @@
 import React, { FunctionComponent, useContext, useEffect, useState } from "react";
-import {Context} from '../Context/Context'
+import { Context } from '../Context/Context'
 import {
   Box,
   Button,
 } from "@material-ui/core";
 import { makeStyles } from '@material-ui/core/styles';
 import { useHistory } from "react-router-dom";
-import {getEvolutionImgs } from '../HelperFunctions/EvolutionDetails'
+import { getEvolutionImgs } from '../HelperFunctions/EvolutionDetails'
 import { ImageKeeper } from './DetailsPageSubComponents/ImageKeeper';
-import {Loading} from "./Loading";
-import {DetailsTabs} from './DetailsPageSubComponents/DetailsTabs'
+import { Loading } from "./Loading";
+import { DetailsTabs } from './DetailsPageSubComponents/DetailsTabs'
 
 const useStyles = makeStyles(theme => ({
   root: {
@@ -37,11 +37,11 @@ const useStyles = makeStyles(theme => ({
       flexDirection: "column",
     }
   }
- 
+
 }));
 
-  
-export const PokemonDetails = () => {
+
+export const PokemonDetails: FunctionComponent = () => {
   const history = useHistory();
   const context = useContext(Context)
   const [mounted, setMounted] = useState<boolean>(false);
@@ -55,8 +55,8 @@ export const PokemonDetails = () => {
 
     setMounted(false);
     if (context.soloPokemon[0]) {
-        async function fetchEvolution() {
-        await context.loadPokemonEvolution(context.soloPokemon[0].name );
+      async function fetchEvolution() {
+        await context.loadPokemonEvolution(context.soloPokemon[0].name);
         await setMounted(true);
       }
       fetchEvolution();
@@ -69,35 +69,35 @@ export const PokemonDetails = () => {
     }
   }, []);
 
-  
+
   return (
     <div className={classes.root}>
 
       {currentPokemon[0] &&
-          <>
+        <>
           <Box>
-          <Button onClick={() => { history.goBack() }} color="primary">Go Back</Button>
+            <Button onClick={() => { history.goBack() }} color="primary">Go Back</Button>
           </Box>
-        
-        <div className={classes.content}>
-          <ImageKeeper pokemon={currentPokemon[0]} sprite={currentPokemon[0].sprites.other.dream_world.front_default} />
-          {context.evolution.length > 0 ?
-            <DetailsTabs
-              images={getEvolutionImgs(context.allPokemonDetails,context.evolution[0] )}
-              abilities={currentPokemon[0].abilities}
-              moves={currentPokemon[0].moves}
-              stats={currentPokemon[0].stats}
-              types={currentPokemon[0].types}
-              
-            />
-            :
-            <Loading pokemonArray={context.evolution.length} />
-          }
-       </div>
-          </>}
+
+          <div className={classes.content}>
+            <ImageKeeper pokemon={currentPokemon[0]} sprite={currentPokemon[0].sprites.other.dream_world.front_default} />
+            {context.evolution.length > 0 ?
+              <DetailsTabs
+                images={getEvolutionImgs(context.allPokemonDetails, context.evolution[0])}
+                abilities={currentPokemon[0].abilities}
+                moves={currentPokemon[0].moves}
+                stats={currentPokemon[0].stats}
+                types={currentPokemon[0].types}
+
+              />
+              :
+              <Loading pokemonArray={context.evolution.length} />
+            }
+          </div>
+        </>}
     </div>
   )
 }
- 
-  
+
+
 

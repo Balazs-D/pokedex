@@ -1,6 +1,6 @@
 // Functions check if a second and / or third evolution level exists.
 // Returns the img and name of each evolution level of the selected pokemon
-export const getEvolutionImgs = (array, source) => {
+export const getEvolutionImgs = (array: any[], source: any[]) => {
   let arr = [[], [], []];
   array.map((item) => {
     if (item.name === source.chain.species.name) {

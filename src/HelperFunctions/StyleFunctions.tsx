@@ -1,4 +1,4 @@
-export const pokemonStyleColor = (pokeStyle) => {
+export const pokemonStyleColor = (pokeStyle: string) => {
   switch (pokeStyle) {
     case "poison":
       return "#EED1F0";
@@ -38,6 +38,6 @@ export const pokemonStyleColor = (pokeStyle) => {
       return "#00DEFF";
 
     default:
-      return "foo";
+      return "#FAFADC";
   }
 };

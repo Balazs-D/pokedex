@@ -1,14 +1,12 @@
-import React, { Fragment, useContext, useState, useEffect } from "react";
-import { HashRouter as Router, Route, Link, Switch } from 'react-router-dom'
+import React, { Fragment } from "react";
+import { HashRouter as Router, Route, Switch } from 'react-router-dom'
 import { ThemeProvider, createMuiTheme } from '@material-ui/core/styles';
-
 import CssBaseline from "@material-ui/core/CssBaseline";
 import Container from "@material-ui/core/Container";
 import Navbar from "./Components/Navbar";
 import Content from "./Components/PokemonList";
 import ContextContainer from './Context/Container'
-import {PokemonDetails} from './Components/PokemonDetails';
-import { Context } from "./Context/Context";
+import { PokemonDetails } from './Components/PokemonDetails';
 
 const theme = createMuiTheme({
   typography: {
@@ -17,11 +15,10 @@ const theme = createMuiTheme({
     ].join(','),
   },
 });
-  
-const App = () => {
-  const context = useContext(Context)
 
-  
+const App = () => {
+
+
 
 
   return (
@@ -29,24 +26,24 @@ const App = () => {
       <ContextContainer>
         <CssBaseline />
         <Router>
-        <ThemeProvider theme={theme}>
+          <ThemeProvider theme={theme}>
 
-      <Navbar />
-      
+            <Navbar />
+
             <Container
               maxWidth="lg"
               max-width='false'
             >
-              
-        <Switch>
-            <Route exact path="/" component={Content} />
-            <Route exact path="/:id" component={()=> <PokemonDetails />} /> 
-          </Switch> 
+
+              <Switch>
+                <Route exact path="/" component={Content} />
+                <Route exact path="/:id" component={() => <PokemonDetails />} />
+              </Switch>
             </Container>
-            </ThemeProvider>
+          </ThemeProvider>
         </Router>
-        
-        </ContextContainer>
+
+      </ContextContainer>
     </Fragment>
   );
 };
