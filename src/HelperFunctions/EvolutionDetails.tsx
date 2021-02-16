@@ -28,7 +28,13 @@ interface Species {
 
 // Functions check if a second and / or third evolution level exists.
 // Returns the img and name of each evolution level of the selected pokemon
+<<<<<<< HEAD
 export const getEvolutionImgs = <T extends ArrayProps, U extends SourceProps>(array: T[], source: U) => {
+=======
+export const getEvolutionImgs = (array: any[], source: any[]) => {
+
+
+>>>>>>> 517622e6d34e484df7e977b4eeab3e3b4f8c73f4
   let arr = [[], [], []];
   array.map((item) => {
     if (item.name === source.chain.species.name) {
