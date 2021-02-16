@@ -1,13 +1,16 @@
-import React, { useContext, createContext, FunctionComponent, ReactNode } from 'react';
+import React, {
+  useContext,
+  createContext,
+  FunctionComponent,
+  ReactNode,
+} from 'react';
 import { Context } from '../Context/Context';
 import Container from '../Context/Container';
-import PokemonList from '../Components/PokemonList'
+import PokemonList from '../Components/PokemonList';
 import { render, fireEvent, waitFor } from '@testing-library/react';
-import { act, renderHook } from '@testing-library/react-hooks'
-
+import { act, renderHook } from '@testing-library/react-hooks';
 
 // Test if getting and updating context data is working
-
 
 // note: ------------------- Hard coded context configuration
 const defaultConfig = {
@@ -22,37 +25,32 @@ const ConfigurationContext = createContext(Container);
 const useTestUrl = () => {
   const { url } = useContext(Context);
   // return `${baseurl}/result.pdf`;
-  return url
+  return url;
 };
 
 describe('useTestURL (context)', () => {
-  const makeWrapper = (value: any): FunctionComponent => ({ children }: { children?: ReactNode }) => (
-    <Container value={value}>
-      {children}
-    </Container>
-  );
+  const makeWrapper = (value: any): FunctionComponent => ({
+    children,
+  }: {
+    children?: ReactNode;
+  }) => <Container value={value}>{children}</Container>;
 
   it('should use context provided config', () => {
-    const { result } = renderHook(
-      () => useTestUrl(),
-      {
-        wrapper: makeWrapper({ baseurl: '{baseurl}', env: '{env}' }),
-      },
-    );
+    const { result } = renderHook(() => useTestUrl(), {
+      wrapper: makeWrapper({ baseurl: '{baseurl}', env: '{env}' }),
+    });
 
     expect(result.current).toBe('{baseurl}/result.pdf');
   });
 
   it('should use default config', () => {
-    const { result } = renderHook(
-      () => useTestUrl(),
-    );
+    const { result } = renderHook(() => useTestUrl());
 
     expect(result.current).toBe('https://localhost:1948/result.pdf');
   });
 });
 
-// Test if Fetch on render happens 
+// Test if Fetch on render happens
 // via context.loadAllPokeDetails()
 
 // describe('fetches-all-pokemon-details-on-render-through-context', () => {
@@ -72,9 +70,8 @@ describe('useTestURL (context)', () => {
 //   })
 // });
 
-// // Test if Fetch next 21 Pokemon when Load More button is clicked 
-// // via context.loadAllPokeDetails 
-
+// // Test if Fetch next 21 Pokemon when Load More button is clicked
+// // via context.loadAllPokeDetails
 
 // describe('fetch-next-pokemon-group-on-click', () => {
 //   it('context update', async () => {
@@ -93,13 +90,11 @@ describe('useTestURL (context)', () => {
 //       default: React.createContext(Context)
 //     }));
 
-
 //     const wrapper = render(
 //       <Context.Provider value={ContextValues}>
 //         <TestComponent />
 //       </Context.Provider>
 //     );
-
 
 //     expect(wrapper.getByTestId('value').textContent).toBe('0');
 //     expect(wrapper.getByTestId('url').textContent).toBe('https://pokeapi.co/api/v2/evolution-chain?offset=0&limit=21');
@@ -107,9 +102,3 @@ describe('useTestURL (context)', () => {
 //     await waitFor(() => expect(wrapper.getByTestId('value').textContent).toBe('21'))
 //   });
 // })
-
-
-
-
-
-

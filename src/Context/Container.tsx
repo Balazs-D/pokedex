@@ -1,21 +1,17 @@
-import React, { FunctionComponent, Fragment, useState } from "react";
-import { Context } from "./Context";
-
-
+import React, { FunctionComponent, Fragment, useState } from 'react';
+import { Context } from './Context';
 
 const Container: FunctionComponent = (ContextInterface) => {
   const [url, setUrl] = useState(
-    "https://pokeapi.co/api/v2/pokemon?limit=21&offset=0"
+    'https://pokeapi.co/api/v2/pokemon?limit=21&offset=0'
   );
   const [urlEvolution, setUrlEvolution] = useState(
-    "https://pokeapi.co/api/v2/evolution-chain?offset=0&limit=21",
+    'https://pokeapi.co/api/v2/evolution-chain?offset=0&limit=21'
   );
-  const [allPokemonDetails, setAllPokemonDetails] = useState<any>([]);
+  const [allPokemonDetails, setAllPokemonDetails] = useState([]);
   const [soloPokemon, setSoloPokemon] = useState([]);
   const [evolution, setEvolution] = useState([]);
   const [allEvolutions, setAllEvolutions] = useState([]);
-
-
 
   const loadAllPokeDetails = async () => {
     try {
@@ -26,9 +22,8 @@ const Container: FunctionComponent = (ContextInterface) => {
         },
       });
       let data = await response.json();
-      setUrl(data.next)
+      setUrl(data.next);
       if (data) {
-
         try {
           // Loop through recent fetched data for details url
           for (let i = 0; i < data.results.length; i++) {
@@ -39,32 +34,31 @@ const Container: FunctionComponent = (ContextInterface) => {
               },
             });
             let dataIteration = await response.json();
-            setAllPokemonDetails(prev => (prev.concat(dataIteration)))
+            setAllPokemonDetails((prev) => prev.concat(dataIteration));
           }
         } catch (error) {
-          console.log(error)
+          console.log(error);
         }
       }
     } catch (error) {
-      console.log(error)
-
+      console.log(error);
     }
-
-
   };
 
-  const loadSelectedPokemon = async (id) => {
-    setSoloPokemon(allPokemonDetails.filter(item => item.id === id));
+  const loadSelectedPokemon = (id) => {
+    setSoloPokemon(allPokemonDetails.filter((item) => item.id === id));
   };
 
   const loadPokemonEvolution = async (name) => {
-    let response = await fetch(`https://pokeapi.co/api/v2/pokemon-species/${name}`, {
-      method: 'GET',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-    });
-
+    let response = await fetch(
+      `https://pokeapi.co/api/v2/pokemon-species/${name}`,
+      {
+        method: 'GET',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+      }
+    );
 
     let data = await response.json();
     let res = await fetch(data.evolution_chain.url, {
@@ -73,13 +67,11 @@ const Container: FunctionComponent = (ContextInterface) => {
         'Content-Type': 'application/json',
       },
     });
-    let evoData = await res.json()
+    let evoData = await res.json();
     setEvolution([evoData]);
 
     // }
   };
-
-
 
   return (
     <Context.Provider
@@ -90,13 +82,16 @@ const Container: FunctionComponent = (ContextInterface) => {
         setAllPokemonDetails,
         loadAllPokeDetails,
         loadSelectedPokemon,
-        soloPokemon, setSoloPokemon,
-        evolution, setEvolution,
+        soloPokemon,
+        setSoloPokemon,
+        evolution,
+        setEvolution,
         loadPokemonEvolution,
-        allEvolutions, setAllEvolutions,
-        urlEvolution, setUrlEvolution
+        allEvolutions,
+        setAllEvolutions,
+        urlEvolution,
+        setUrlEvolution,
       }}
-
       {...ContextInterface}
     >
       <Fragment>{ContextInterface.children}</Fragment>
