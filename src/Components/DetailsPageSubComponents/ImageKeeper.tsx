@@ -31,18 +31,18 @@ const useStyles = makeStyles(theme => ({
       borderBottom: "1px solid black",
     }
   },
-    Title: {
-      [theme.breakpoints.down('xs')]: {
-        fontSize: 45
-      }
+  Title: {
+    [theme.breakpoints.down('xs')]: {
+      fontSize: 45
     }
+  }
 
   ,
   TitleBox: {
     margin: '.5vw'
   },
   Image: {
-    width:"15vw",
+    width: "15vw",
     maxHeight: "18vw",
     margin: "1vw",
     [theme.breakpoints.down('xs')]: {
@@ -56,8 +56,12 @@ const useStyles = makeStyles(theme => ({
   }
 }));
 
+
+interface Types {
+  types: object[];
+};
 interface Pokemon {
-  types: any[];
+  types: Types;
   order: number | string;
   type: string;
   name: string
@@ -70,32 +74,32 @@ interface Sprite {
 interface PokemonProps {
   pokemon: Pokemon;
   sprite: Sprite
-  
+
 };
 
-  
+
 export const ImageKeeper: FunctionComponent<PokemonProps> = (props: PokemonProps) => {
   const classes = useStyles();
   const { name, order, types } = props.pokemon;
-  const sprite  = props.sprite.toString();
+  const sprite = props.sprite.toString();
   const bg = pokemonStyleColor(types[0].type.name);
   return (
-  
 
-      <div className={classes.ImgBox} style={{ background: bg }}>
-           
+
+    <div className={classes.ImgBox} style={{ background: bg }}>
+
       <div className={classes.TitleBox}>
         <Typography className={classes.Title} variant='h2' >
-                {name.toUpperCase()}
-              </Typography>
-                <Typography align='right' variant='h5'>#{order}</Typography>
-                </div>
-      <img className={classes.Image} src={sprite} alt={name}  />
-           
-          </div>
-        
+          {name.toUpperCase()}
+        </Typography>
+        <Typography align='right' variant='h5'>#{order}</Typography>
+      </div>
+      <img className={classes.Image} src={sprite} alt={name} />
+
+    </div>
+
   )
 }
- 
-  
+
+
 

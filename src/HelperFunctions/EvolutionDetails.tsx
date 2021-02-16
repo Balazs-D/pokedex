@@ -1,6 +1,34 @@
+interface ArrayProps {
+  sprites: Sprites,
+  name: string,
+};
+interface Sprites {
+  other: Other,
+};
+interface Other {
+  dream_world: Dream_World,
+};
+interface Dream_World {
+  dream_world: Array<{}>,
+  front_default: string
+
+};
+interface SourceProps {
+  chain: Chain,
+  // name: string
+};
+interface Chain {
+  species: Species,
+  evolves_to: any[],
+
+};
+interface Species {
+  name: string
+};
+
 // Functions check if a second and / or third evolution level exists.
 // Returns the img and name of each evolution level of the selected pokemon
-export const getEvolutionImgs = (array: any[], source: any[]) => {
+export const getEvolutionImgs = <T extends ArrayProps, U extends SourceProps>(array: T[], source: U) => {
   let arr = [[], [], []];
   array.map((item) => {
     if (item.name === source.chain.species.name) {

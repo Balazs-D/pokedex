@@ -1,4 +1,4 @@
-export const pokemonStyleColor = (pokeStyle: string) => {
+export const pokemonStyleColor = (pokeStyle: string): string => {
   switch (pokeStyle) {
     case "poison":
       return "#EED1F0";

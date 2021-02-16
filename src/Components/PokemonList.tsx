@@ -6,7 +6,6 @@ import {
   useMediaQuery
 } from "@material-ui/core";
 import { useTheme } from '@material-ui/core/styles';
-
 import ExpandMoreTwoToneIcon from '@material-ui/icons/ExpandMoreTwoTone';
 import { PokemonOverviewCard } from "./PokemonOverviewCard";
 import {Loading} from "./Loading";

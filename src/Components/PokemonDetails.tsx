@@ -67,6 +67,8 @@ export const PokemonDetails: FunctionComponent = () => {
       context.setEvolution([]);
       setMounted(false);
     }
+
+    // eslint-disable-next-line
   }, []);
 
 

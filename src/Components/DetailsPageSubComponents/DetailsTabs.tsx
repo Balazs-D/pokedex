@@ -1,4 +1,4 @@
-import React, {FunctionComponent, useState} from 'react';
+import React, { FunctionComponent, useState } from 'react';
 import { makeStyles, withStyles, Theme, createStyles, useTheme } from '@material-ui/core/styles';
 import Tabs from '@material-ui/core/Tabs';
 import Tab from '@material-ui/core/Tab';
@@ -14,12 +14,12 @@ interface StyledTabsProps {
 }
 
 const StyledTabs = withStyles({
-  
+
   indicator: {
     display: 'flex',
     justifyContent: 'center',
     backgroundColor: 'transparent',
-    
+
     '& > span': {
       maxWidth: 40,
       width: '100%',
@@ -77,10 +77,10 @@ function TabPanel(props: TabPanelProps) {
       id={`full-width-tabpanel-${index}`}
       aria-labelledby={`full-width-tab-${index}`}
       {...other}
-      style={{display: 'flex', justifyContent: 'space-around' }}
+      style={{ display: 'flex', justifyContent: 'space-around' }}
     >
       {value === index && (
-        <Box p={3} style={{overflow: 'hidden', position: 'relative', width: '100%'}} >
+        <Box p={3} style={{ overflow: 'hidden', position: 'relative', width: '100%' }} >
           <Typography>{children}</Typography>
         </Box>
       )}
@@ -91,12 +91,12 @@ function TabPanel(props: TabPanelProps) {
 
 
 interface EvolvesToProps {
-  images: any[],
+  images: object[],
   abilities: string[],
   moves: string[],
   stats: string[],
   types: string[]
- 
+
 };
 
 
@@ -105,41 +105,41 @@ export const DetailsTabs: FunctionComponent<EvolvesToProps> = (props: EvolvesToP
   const theme = useTheme();
   const [value, setValue] = useState(0);
 
-  const { images,abilities,moves,stats,types} = props;
+  const { images, abilities, moves, stats, types } = props;
 
   const handleChange = (event: React.ChangeEvent<{}>, newValue: number) => {
     setValue(newValue);
   };
 
-console.log(images)
+  console.log(images)
   return (
     <div className={classes.root}>
       <div className={classes.root}>
-      <div className={classes.demo2}>
-        <StyledTabs value={value} onChange={handleChange} >
-          <StyledTab label="Details" />
+        <div className={classes.demo2}>
+          <StyledTabs value={value} onChange={handleChange} >
+            <StyledTab label="Details" />
             <StyledTab label="Moves" />
             <StyledTab label="Evolution" />
-        </StyledTabs>
-      
+          </StyledTabs>
+
+        </div>
       </div>
-    </div>
-      
+
       <TabPanel value={value} index={0} dir={theme.direction}>
-        <Infos  abilities={abilities} types={types} stats={stats}/>
-        </TabPanel>
-        <TabPanel value={value} index={1} dir={theme.direction}>
-        <Moves items={moves}/>
+        <Infos abilities={abilities} types={types} stats={stats} />
+      </TabPanel>
+      <TabPanel value={value} index={1} dir={theme.direction}>
+        <Moves items={moves} />
       </TabPanel>
       <TabPanel value={value} index={2} dir={theme.direction}>
         <Evolution
-         
+
           images={images}
-          
-        /> 
-        </TabPanel>
-       
-     
+
+        />
+      </TabPanel>
+
+
     </div>
   );
 }
